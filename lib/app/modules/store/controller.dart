@@ -1,0 +1,20 @@
+import 'package:app_hortifruti_pratico/app/data/models/store_model.dart';
+import 'package:app_hortifruti_pratico/app/modules/store/repository.dart';
+import 'package:get/get.dart';
+
+class StoreController extends GetxController with StateMixin<StoreModel> {
+  final StoreRepository _repository;
+  StoreController(this._repository);
+
+  @override
+  void onInit() {
+    int id = int.parse(Get.parameters['id']!);
+
+    _repository.getStore(id).then((value) {
+      change(value, status: RxStatus.success());
+    }, onError: (error) {
+      change(null, status: RxStatus.error(error.toString()));
+    });
+    super.onInit();
+  }
+}
