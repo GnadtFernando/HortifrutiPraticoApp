@@ -35,7 +35,7 @@ class DashboardPage extends GetView<DashboardController> {
       body: Obx(
         () => IndexedStack(
           index: controller.currentPageIndex.value,
-          children: [
+          children: const [
             HomePage(),
             Text('Meu Perfil'),
             Text('Meus Pedidos'),
