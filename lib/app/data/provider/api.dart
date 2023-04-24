@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:app_hortifruti_pratico/app/data/models/store.dart';
+import 'package:app_hortifruti_pratico/app/data/models/user_login_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -14,6 +17,11 @@ class Api extends GetConnect {
       return request;
     });
     super.onInit();
+  }
+
+  login(UserLoginRequestModel data) async {
+    var json = _errorHandler(await post('login', jsonEncode(data)));
+    return json;
   }
 
   Future<List<StoreModel>> getStores() async {

@@ -24,6 +24,7 @@ class LoginPage extends GetView<LoginController> {
               },
             ),
             TextFormField(
+              obscureText: true,
               controller: controller.passwordController,
               decoration: const InputDecoration(labelText: 'Senha'),
               validator: (String? value) {
