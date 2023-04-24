@@ -6,6 +6,7 @@ class CartService extends GetxService {
   List<CartProductModel> products = RxList<CartProductModel>.empty();
 
   final store = Rxn<StoreModel>();
+  final observacao = ''.obs;
 
   void addProductToCart(CartProductModel cartProductModel) {
     products.add(cartProductModel);
@@ -13,6 +14,13 @@ class CartService extends GetxService {
 
   void newCart(StoreModel newStore) {
     store.value = newStore;
+  }
+
+  bool isANewStore(StoreModel storeModel) {
+    return store.value != null && store.value!.id != storeModel.id;
+  }
+
+  void clearCart() {
     products.clear();
   }
 

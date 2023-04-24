@@ -19,10 +19,22 @@ class ProdutoController extends GetxController {
     super.onInit();
   }
 
-  void addToCart() {
+  void addToCart() async {
     var quantity = Get.find<QuantityAndWeightController>().quantity;
 
-    // _cartService.newCart(store.value!);
+    if (_cartService.isANewStore(store.value!)) {
+      var startNewCart = await showDialogNewCart();
+
+      if (startNewCart == true) {
+        _cartService.clearCart();
+      } else {
+        return;
+      }
+    }
+
+    if (_cartService.products.isEmpty) {
+      _cartService.newCart(store.value!);
+    }
 
     _cartService.addProductToCart(
       CartProductModel(
@@ -40,5 +52,24 @@ class ProdutoController extends GetxController {
     );
 
     Future.delayed(const Duration(milliseconds: 300), () => Get.back());
+  }
+
+  Future<dynamic> showDialogNewCart() {
+    return Get.dialog(
+      AlertDialog(
+        content: const Text(
+            'Seu carrinho atual será perdido se adicionar produtos de um novo estabelecimento.'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text('Voltar'),
+          ),
+          TextButton(
+            onPressed: () => Get.back(result: true),
+            child: const Text('Confirmar'),
+          ),
+        ],
+      ),
+    );
   }
 }
