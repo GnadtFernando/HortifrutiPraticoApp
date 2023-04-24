@@ -3,7 +3,6 @@ import 'package:app_hortifruti_pratico/app/modules/product/widgets/quantity_widg
 import 'package:app_hortifruti_pratico/app/modules/product/widgets/weight_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class QuantityAndWeightWidget extends StatelessWidget {
   final bool isKg;
