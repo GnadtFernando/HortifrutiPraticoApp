@@ -1,3 +1,4 @@
+import 'package:app_hortifruti_pratico/app/data/models/address.dart';
 import 'package:app_hortifruti_pratico/app/data/models/payment_method.dart';
 import 'package:app_hortifruti_pratico/app/data/models/shipping_by_city.dart';
 import 'package:app_hortifruti_pratico/app/data/services/auth/service.dart';
@@ -32,6 +33,13 @@ class CheckoutController extends GetxController {
       _cartSerice.store.value!.paymentMethods;
   final paymentMethod = Rxn<PaymentMethodModel>();
   bool get isLogged => _authService.isLogged;
+  final addresses = RxList<AddressModel>.empty();
+
+  @override
+  void onInit() {
+    fetchAdrresses();
+    super.onInit();
+  }
 
   void changePaymentMethod(PaymentMethodModel? newPaymentMethod) {
     paymentMethod.value = newPaymentMethod;
@@ -39,5 +47,11 @@ class CheckoutController extends GetxController {
 
   void goToLogin() {
     Get.toNamed(Routes.login);
+  }
+
+  void fetchAdrresses() {
+    _repository.getUserAddresses().then((value) {
+      addresses.addAll(value);
+    });
   }
 }

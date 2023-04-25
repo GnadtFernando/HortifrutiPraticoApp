@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_hortifruti_pratico/app/data/models/address.dart';
 import 'package:app_hortifruti_pratico/app/data/models/store.dart';
 import 'package:app_hortifruti_pratico/app/data/models/user.dart';
 import 'package:app_hortifruti_pratico/app/data/models/user_login_request.dart';
@@ -41,6 +42,17 @@ class Api extends GetConnect {
   Future<UserModel> getUser() async {
     final response = _errorHandler(await get('auth/me'));
     return UserModel.fromJson(response.body);
+  }
+
+  Future<List<AddressModel>> getUserAddresses() async {
+    final response = _errorHandler(await get('enderecos'));
+
+    final List<AddressModel> data = [];
+
+    for (var address in response.body) {
+      data.add(AddressModel.fromJson(address));
+    }
+    return data;
   }
 
   Future<List<StoreModel>> getStores() async {
