@@ -8,7 +8,7 @@ class StoreController extends GetxController with StateMixin<StoreModel> {
 
   @override
   void onInit() {
-    int id = int.parse(Get.parameters['id']!);
+    final int id = int.parse(Get.parameters['id']!);
 
     _repository.getStore(id).then((value) {
       change(value, status: RxStatus.success());

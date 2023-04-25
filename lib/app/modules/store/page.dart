@@ -60,7 +60,7 @@ class StorePage extends GetView<StoreController> {
               delegate: SliverChildBuilderDelegate(
                 childCount: state.categorias.length,
                 (context, index) {
-                  var categoria = state.categorias[index];
+                  final categoria = state.categorias[index];
                   return Column(
                     children: [
                       Row(

@@ -20,10 +20,10 @@ class ProdutoController extends GetxController {
   }
 
   void addToCart() async {
-    var quantity = Get.find<QuantityAndWeightController>().quantity;
+    final quantity = Get.find<QuantityAndWeightController>().quantity;
 
     if (_cartService.isANewStore(store.value!)) {
-      var startNewCart = await showDialogNewCart();
+      final startNewCart = await showDialogNewCart();
 
       if (startNewCart == true) {
         _cartService.clearCart();

@@ -10,7 +10,7 @@ class ProdutoPage extends GetView<ProdutoController> {
 
   @override
   Widget build(BuildContext context) {
-    var produto = controller.product.value!;
+    final produto = controller.product.value!;
     return Scaffold(
       appBar: AppBar(
         title: Text(produto.nome),

@@ -43,7 +43,7 @@ class QuantityAndWeightController extends GetxController {
     update();
   }
 
-  _updateMinAndMax() {
+  void _updateMinAndMax() {
     min = weight - 1 + 0.05;
     max = weight;
 

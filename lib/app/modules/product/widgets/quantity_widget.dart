@@ -9,8 +9,8 @@ class QuantityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var quantidade = controller.quantity;
-    var isKg = controller.isKg;
+    final quantidade = controller.quantity;
+    final isKg = controller.isKg;
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
