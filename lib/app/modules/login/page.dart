@@ -11,53 +11,56 @@ class LoginPage extends GetView<LoginController> {
       appBar: AppBar(title: const Text('Login')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: controller.emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-              validator: (String? value) {
-                if (value != null && value.isEmpty) {
-                  return 'Informe o seu email';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              obscureText: true,
-              controller: controller.passwordController,
-              decoration: const InputDecoration(labelText: 'Senha'),
-              validator: (String? value) {
-                if (value != null && value.isEmpty) {
-                  return 'Informe a sua senha';
-                }
-                return null;
-              },
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: ElevatedButton(
-                      onPressed: controller.login,
-                      child: const Text('Entrar'),
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: controller.emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Informe o seu email';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                obscureText: true,
+                controller: controller.passwordController,
+                decoration: const InputDecoration(labelText: 'Senha'),
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Informe a sua senha';
+                  }
+                  return null;
+                },
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: ElevatedButton(
+                        onPressed: controller.login,
+                        child: const Text('Entrar'),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Quero criar a minha conta'),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {},
+                      child: const Text('Quero criar a minha conta'),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

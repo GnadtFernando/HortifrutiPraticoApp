@@ -1,6 +1,5 @@
 import 'package:app_hortifruti_pratico/app/data/models/city.dart';
 import 'package:app_hortifruti_pratico/app/data/models/user_address_request.dart';
-import 'package:app_hortifruti_pratico/app/data/services/auth/service.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/repository.dart';
 
 import 'package:flutter/material.dart';
@@ -11,7 +10,8 @@ class UserAddressController extends GetxController
   final UserAddressRepository _repository;
   UserAddressController(this._repository);
 
-  final _authService = Get.find<AuthService>();
+  final formKey = GlobalKey<FormState>();
+  // final _authService = Get.find<AuthService>();
   final streetController = TextEditingController(text: '');
   final numberController = TextEditingController(text: '');
   final neighborhoodController = TextEditingController(text: '');
@@ -30,6 +30,12 @@ class UserAddressController extends GetxController
   }
 
   void submit() {
+    Get.focusScope!.unfocus();
+
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     final userAddressRequest = UserAddressRequestModel(
       street: streetController.text,
       number: numberController.text,
