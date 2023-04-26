@@ -10,9 +10,14 @@ class CheckoutPage extends GetView<CheckoutController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Checkout')),
-      body: SingleChildScrollView(
-        child: Obx(
-          () => Column(
+      body: Obx(() {
+        if (controller.loading.isTrue) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -23,21 +28,39 @@ class CheckoutPage extends GetView<CheckoutController> {
                   style: Get.textTheme.titleLarge,
                 ),
               ),
-              if (controller.isLogged)
+              if (controller.isLogged) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (controller.addresses.isEmpty)
+                      if (controller.addresses.isNotEmpty) ...[
+                        Expanded(child: _buildAddress()),
+                        TextButton(
+                          onPressed: controller.showAddressList,
+                          child: const Text('Alterar'),
+                        ),
+                      ] else
                         OutlinedButton(
                           onPressed: controller.goToNewAddress,
                           child: const Text('Cadastrar um endereço'),
                         )
                     ],
                   ),
-                )
-              else
+                ),
+                if (!controller.deliveryToMyAddress)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        'O endereço selecioinado não é atendido',
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodyLarge!
+                            .copyWith(color: Colors.red),
+                      ),
+                    ),
+                  )
+              ] else
                 Center(
                   child: OutlinedButton(
                     onPressed: controller.goToLogin,
@@ -124,8 +147,15 @@ class CheckoutPage extends GetView<CheckoutController> {
               ),
             ],
           ),
-        ),
-      ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildAddress() {
+    final address = controller.addressSelected.value!;
+    return Text(
+      '${address.street}, n* ${address.number}, ${address.neighborhood}',
     );
   }
 }

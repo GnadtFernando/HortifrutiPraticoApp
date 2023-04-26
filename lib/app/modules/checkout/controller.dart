@@ -5,6 +5,7 @@ import 'package:app_hortifruti_pratico/app/data/services/auth/service.dart';
 import 'package:app_hortifruti_pratico/app/data/services/cart/service.dart';
 import 'package:app_hortifruti_pratico/app/modules/checkout/repository.dart';
 import 'package:app_hortifruti_pratico/app/routes/routes.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CheckoutController extends GetxController {
@@ -13,7 +14,7 @@ class CheckoutController extends GetxController {
   final _authService = Get.find<AuthService>();
 
   CheckoutController(this._repository);
-
+  final loading = true.obs;
   num get totalCart => _cartSerice.total;
   num get deliveryCost {
     if (getShippingByCity != null) {
@@ -23,9 +24,13 @@ class CheckoutController extends GetxController {
   }
 
   ShippingByCityModel? get getShippingByCity {
-    const cityId = 1;
-    return _cartSerice.store.value!.shippingByCity
-        .firstWhereOrNull((shippingByCity) => shippingByCity.id == cityId);
+    if (addressSelected.value == null) {
+      return null;
+    }
+
+    return _cartSerice.store.value!.shippingByCity.firstWhereOrNull(
+        (shippingByCity) =>
+            shippingByCity.id == addressSelected.value!.city!.id);
   }
 
   num get totalOrder => totalCart + deliveryCost;
@@ -34,6 +39,8 @@ class CheckoutController extends GetxController {
   final paymentMethod = Rxn<PaymentMethodModel>();
   bool get isLogged => _authService.isLogged;
   final addresses = RxList<AddressModel>.empty();
+  final addressSelected = Rxn<AddressModel>();
+  bool get deliveryToMyAddress => getShippingByCity != null;
 
   @override
   void onInit() {
@@ -56,6 +63,39 @@ class CheckoutController extends GetxController {
   void fetchAdrresses() {
     _repository.getUserAddresses().then((value) {
       addresses.addAll(value);
+
+      if (addresses.isNotEmpty) {
+        addressSelected.value = addresses.first;
+      }
+      loading(false);
+    }, onError: (error) {
+      loading(false);
     });
+  }
+
+  void showAddressList() {
+    Get.dialog(
+      SimpleDialog(
+        title: const Text('Selecione um endereço'),
+        children: [
+          for (var address in addresses)
+            SimpleDialogOption(
+              onPressed: () {
+                addressSelected.value = address;
+                Get.back();
+              },
+              child: Text(
+                  '${address.street}, n* ${address.number}, ${address.neighborhood}'),
+            ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              goToNewAddress();
+            },
+            child: const Text('Cadastrar um endereço'),
+          )
+        ],
+      ),
+    );
   }
 }
