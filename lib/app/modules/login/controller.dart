@@ -21,6 +21,16 @@ class LoginController extends GetxController {
       password: passwordController.text,
     );
 
-    _authService.login(userLoginRequestModel).then((value) => null);
+    _authService.login(userLoginRequestModel).then((value) {
+      Get.back(result: true);
+    }, onError: (error) {
+      Get.dialog(
+        AlertDialog(
+          title: Text(
+            error.toString(),
+          ),
+        ),
+      );
+    });
   }
 }
