@@ -141,7 +141,8 @@ class CheckoutPage extends GetView<CheckoutController> {
               ),
               Align(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed:
+                      controller.canSendOrder ? controller.sendOrder : null,
                   child: const Text('Enviar pedido'),
                 ),
               ),

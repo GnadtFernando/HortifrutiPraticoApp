@@ -37,9 +37,9 @@ class CartPage extends GetView<CartController> {
                 ),
               for (var cartProduct in controller.products)
                 ListTile(
-                  title: Text(cartProduct.productModel.nome),
+                  title: Text(cartProduct.product.nome),
                   subtitle: Text(
-                    '${NumberFormat.simpleCurrency().format(cartProduct.total)} (${NumberFormat.simpleCurrency().format(cartProduct.productModel.preco)})',
+                    '${NumberFormat.simpleCurrency().format(cartProduct.total)} (${NumberFormat.simpleCurrency().format(cartProduct.product.preco)})',
                   ),
                   leading: _buildProductQuantity(cartProduct),
                   trailing: IconButton(
@@ -67,7 +67,7 @@ class CartPage extends GetView<CartController> {
   Widget _buildProductQuantity(CartProductModel cartProductModel) {
     return Text(
       NumberFormat.decimalPattern().format(cartProductModel.quantity) +
-          (cartProductModel.productModel.isKG ? 'kg' : 'x'),
+          (cartProductModel.product.isKG ? 'kg' : 'x'),
     );
   }
 }

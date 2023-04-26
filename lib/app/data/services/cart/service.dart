@@ -30,4 +30,9 @@ class CartService extends GetxService {
   void removeProductFromCart(CartProductModel cartProductModel) {
     products.remove(cartProductModel);
   }
+
+  void finalizeCart() {
+    clearCart();
+    observacao.value = '';
+  }
 }

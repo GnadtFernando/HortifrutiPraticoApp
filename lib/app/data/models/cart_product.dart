@@ -1,16 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_hortifruti_pratico/app/data/models/produto.dart';
 
 class CartProductModel {
-  ProductModel productModel;
+  ProductModel product;
   num quantity;
   String? observation;
 
   CartProductModel({
-    required this.productModel,
+    required this.product,
     required this.quantity,
     this.observation,
   });
 
-  num get total => productModel.preco * quantity;
+  num get total => product.preco * quantity;
+
+  Map<String, dynamic> toJson() => {
+        'produto_id': product.id,
+        'quantidade': quantity,
+        if (observation != null && observation!.trim().isNotEmpty)
+          'observacao': observation,
+      };
 }
