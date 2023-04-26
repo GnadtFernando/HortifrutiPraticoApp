@@ -1,4 +1,5 @@
 import 'package:app_hortifruti_pratico/app/data/models/city.dart';
+import 'package:app_hortifruti_pratico/app/data/models/user_address_request.dart';
 import 'package:app_hortifruti_pratico/app/data/services/auth/service.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/repository.dart';
 
@@ -28,7 +29,33 @@ class UserAddressController extends GetxController
     super.onInit();
   }
 
-  void submit() {}
+  void submit() {
+    final userAddressRequest = UserAddressRequestModel(
+      street: streetController.text,
+      number: numberController.text,
+      neighborhood: neighborhoodController.text,
+      referencePoint: referencePointController.text,
+      cityId: cityId.value!,
+      complement: complementController.text,
+    );
+
+    _repository.postAddress(userAddressRequest).then(
+      (value) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
+          const SnackBar(
+            content: Text('Um novo endereço foi cadastrado'),
+          ),
+        );
+      },
+      onError: (error) => Get.dialog(
+        AlertDialog(
+          title: Text(
+            error.toString(),
+          ),
+        ),
+      ),
+    );
+  }
 
   void changeCity(int? citySelected) {
     cityId.value = citySelected;
