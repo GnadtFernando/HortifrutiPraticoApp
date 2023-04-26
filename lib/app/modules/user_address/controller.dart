@@ -52,6 +52,7 @@ class UserAddressController extends GetxController
             content: Text('Um novo endereço foi cadastrado'),
           ),
         );
+        Get.back(result: true);
       },
       onError: (error) => Get.dialog(
         AlertDialog(
