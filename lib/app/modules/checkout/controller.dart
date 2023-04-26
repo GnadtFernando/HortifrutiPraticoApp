@@ -49,6 +49,10 @@ class CheckoutController extends GetxController {
     Get.toNamed(Routes.login);
   }
 
+  void goToNewAddress() {
+    Get.toNamed(Routes.userAddress);
+  }
+
   void fetchAdrresses() {
     _repository.getUserAddresses().then((value) {
       addresses.addAll(value);
