@@ -109,7 +109,7 @@ class UserProfilePage extends GetView<UserProfileController> {
         onError: (error) => Center(
           child: ElevatedButton(
             onPressed: () => Get.toNamed(Routes.login),
-            child: const Text('Entrar com minha conta'),
+            child: const Text('Entre com a sua conta'),
           ),
         ),
       ),
