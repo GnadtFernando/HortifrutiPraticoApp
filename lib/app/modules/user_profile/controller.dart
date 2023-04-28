@@ -1,33 +1,36 @@
-import 'package:app_hortifruti_pratico/app/data/models/city.dart';
+import 'package:app_hortifruti_pratico/app/data/models/user.dart';
+import 'package:app_hortifruti_pratico/app/data/models/user_profile_request.dart';
 
 import 'package:app_hortifruti_pratico/app/modules/user_profile/repository.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserProfileController extends GetxController
-    with StateMixin<List<CityModel>> {
+class UserProfileController extends GetxController with StateMixin<UserModel> {
   final UserProfileRepository _repository;
   UserProfileController(this._repository);
 
   final formKey = GlobalKey<FormState>();
-  // final _authService = Get.find<AuthService>();
-  final streetController = TextEditingController(text: '');
-  final numberController = TextEditingController(text: '');
-  final neighborhoodController = TextEditingController(text: '');
-  final referencePointController = TextEditingController(text: '');
-  final complementController = TextEditingController(text: '');
-  final cityId = RxnInt();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void onInit() {
-    _repository.getCities().then((data) {
+    _repository.getUser().then((data) {
+      nameController.text = data.name;
+      emailController.text = data.email;
+      phoneController.text = data.phone;
+
       change(data, status: RxStatus.success());
     }, onError: (error) {
       change(null, status: RxStatus.error(error));
     });
     super.onInit();
   }
+
+  void logout() {}
 
   void submit() {
     Get.focusScope!.unfocus();
@@ -36,35 +39,30 @@ class UserProfileController extends GetxController
       return;
     }
 
-    // final userAddressRequest = UserProfileRequestModel(
-    //   street: streetController.text,
-    //   number: numberController.text,
-    //   neighborhood: neighborhoodController.text,
-    //   referencePoint: referencePointController.text,
-    //   cityId: cityId.value!,
-    //   complement: complementController.text,
-    // );
+    final userProfileRequest = UserProfileRequestModel(
+      nome: nameController.text,
+      phone: phoneController.text,
+      email: emailController.text,
+      password: passwordController.text,
+    );
 
-    // _repository.postAddress(userAddressRequest).then(
-    //   (value) {
-    //     ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-    //       const SnackBar(
-    //         content: Text('Um novo endereço foi cadastrado'),
-    //       ),
-    //     );
-    //     Get.back(result: true);
-    //   },
-    //   onError: (error) => Get.dialog(
-    //     AlertDialog(
-    //       title: Text(
-    //         error.toString(),
-    //       ),
-    //     ),
-    //   ),
-    // );
-  }
+    _repository.putUser(userProfileRequest).then(
+      (value) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
+          const SnackBar(
+            content: Text('Seu perfil foi atualizado com sucesso!'),
+          ),
+        );
 
-  void changeCity(int? citySelected) {
-    cityId.value = citySelected;
+        passwordController.text = '';
+      },
+      onError: (error) => Get.dialog(
+        AlertDialog(
+          title: Text(
+            error.toString(),
+          ),
+        ),
+      ),
+    );
   }
 }
