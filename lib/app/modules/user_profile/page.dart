@@ -38,6 +38,7 @@ class UserProfilePage extends GetView<UserProfileController> {
                   },
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.phone,
                   controller: controller.phoneController,
                   decoration: const InputDecoration(labelText: 'Telefone'),
                   validator: (String? value) {

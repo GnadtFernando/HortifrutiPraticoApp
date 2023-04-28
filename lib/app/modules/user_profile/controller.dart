@@ -1,7 +1,9 @@
 import 'package:app_hortifruti_pratico/app/data/models/user.dart';
 import 'package:app_hortifruti_pratico/app/data/models/user_profile_request.dart';
+import 'package:app_hortifruti_pratico/app/data/services/auth/service.dart';
 
 import 'package:app_hortifruti_pratico/app/modules/user_profile/repository.dart';
+import 'package:app_hortifruti_pratico/app/routes/routes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,7 @@ class UserProfileController extends GetxController with StateMixin<UserModel> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+  final _authService = Get.find<AuthService>();
 
   @override
   void onInit() {
@@ -30,7 +33,11 @@ class UserProfileController extends GetxController with StateMixin<UserModel> {
     super.onInit();
   }
 
-  void logout() {}
+  void logout() async {
+    await _authService.logout();
+
+    Get.offAllNamed(Routes.dashboard);
+  }
 
   void submit() {
     Get.focusScope!.unfocus();
