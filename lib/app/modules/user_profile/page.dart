@@ -19,7 +19,7 @@ class UserProfilePage extends GetView<UserProfileController> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(Routes.userAddressList),
                       child: const Text('Meus endereços'),
                     ),
                   ),

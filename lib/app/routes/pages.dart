@@ -10,6 +10,8 @@ import 'package:app_hortifruti_pratico/app/modules/product/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/product/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/store/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/store/page.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_addres_list/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_addres_list/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/page.dart';
 import 'package:app_hortifruti_pratico/app/routes/routes.dart';
@@ -51,6 +53,11 @@ abstract class AppPages {
       name: Routes.userAddress,
       page: () => const UserAddressPage(),
       binding: UserAddressBinding(),
+    ),
+    GetPage(
+      name: Routes.userAddressList,
+      page: () => const UserAddressListPage(),
+      binding: UserAddressListBinding(),
     ),
   ];
 }
