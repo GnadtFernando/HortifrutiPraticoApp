@@ -6,4 +6,5 @@ class UserAddressListRepository {
 
   UserAddressListRepository(this._api);
   Future<List<AddressModel>> getUserAddresses() => _api.getUserAddresses();
+  Future<void> deleteAddress(int id) => _api.deleteAddress(id);
 }

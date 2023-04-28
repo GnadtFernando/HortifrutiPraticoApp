@@ -46,7 +46,7 @@ class CheckoutController extends GetxController {
 
   @override
   void onInit() {
-    fetchAdrresses();
+    fetchAddresses();
     super.onInit();
   }
 
@@ -57,18 +57,18 @@ class CheckoutController extends GetxController {
   void goToLogin() async {
     final result = await Get.toNamed(Routes.login);
     if (result is bool && result) {
-      fetchAdrresses();
+      fetchAddresses();
     }
   }
 
   void goToNewAddress() async {
     final result = await Get.toNamed(Routes.userAddress);
     if (result is bool && result) {
-      fetchAdrresses();
+      fetchAddresses();
     }
   }
 
-  void fetchAdrresses() {
+  void fetchAddresses() {
     loading(true);
     _repository.getUserAddresses().then((data) {
       addresses.assignAll(data);
