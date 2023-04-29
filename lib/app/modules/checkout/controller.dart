@@ -47,6 +47,7 @@ class CheckoutController extends GetxController {
   @override
   void onInit() {
     fetchAddresses();
+    ever(_authService.user, (_) => fetchAddresses());
     super.onInit();
   }
 
@@ -54,11 +55,8 @@ class CheckoutController extends GetxController {
     paymentMethod.value = newPaymentMethod;
   }
 
-  void goToLogin() async {
-    final result = await Get.toNamed(Routes.login);
-    if (result is bool && result) {
-      fetchAddresses();
-    }
+  void goToLogin() {
+    Get.toNamed(Routes.login);
   }
 
   void goToNewAddress() async {
