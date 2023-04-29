@@ -10,7 +10,8 @@ class OrderListController extends GetxController
   @override
   void onInit() {
     _repository.getOrders().then((data) {
-      change(data, status: RxStatus.success());
+      final status = data.isEmpty ? RxStatus.empty() : RxStatus.success();
+      change(data, status: status);
     }, onError: (error) {
       change(null, status: RxStatus.error(error.toString()));
     });

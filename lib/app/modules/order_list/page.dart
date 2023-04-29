@@ -18,10 +18,25 @@ class OrderListPage extends GetView<OrderListController> {
                 title: Text('#${order.hashId}'),
                 subtitle: Text(order.store.nome),
                 trailing: Chip(
-                  label: Text(order.statusList.last.name),
+                  label: SizedBox(
+                    width: 80,
+                    child: Text(
+                      order.statusList.last.name,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
-              )
+                onTap: () => Get.toNamed(
+                  Routes.order.replaceFirst(':id', order.hashId),
+                ),
+              ),
           ],
+        ),
+        onEmpty: const Center(
+          child: Text(
+            'Você não fez nenhum pedido ainda',
+            textAlign: TextAlign.center,
+          ),
         ),
         onError: (error) => Center(
           child: ElevatedButton(

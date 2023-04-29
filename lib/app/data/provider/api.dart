@@ -116,6 +116,11 @@ class Api extends GetConnect {
     return data;
   }
 
+  Future<OrderModel> getOrder(String id) async {
+    final response = _errorHandler(await get('pedidos/$id'));
+    return OrderModel.fromJson(response.body);
+  }
+
   Response _errorHandler(Response response) {
     debugPrint(response.bodyString.toString());
     switch (response.statusCode) {
