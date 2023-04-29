@@ -75,7 +75,11 @@ class Api extends GetConnect {
   }
 
   Future<void> postAddress(UserAddressRequestModel data) async {
-    _errorHandler(await post('enderecos', jsonEncode(data)));
+    _errorHandler(await post('enderecos/${data.id}', jsonEncode(data)));
+  }
+
+  Future<void> putAddress(UserAddressRequestModel data) async {
+    _errorHandler(await put('enderecos', jsonEncode(data)));
   }
 
   Future<void> deleteAddress(int id) async {
