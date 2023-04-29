@@ -15,6 +15,7 @@ class OrderModel {
   List<OrderStatusModel> statusList;
   String? observation;
   DateTime createdAt;
+  num? trocoPara;
 
   OrderModel({
     required this.hashId,
@@ -27,37 +28,38 @@ class OrderModel {
     required this.productList,
     this.observation,
     required this.createdAt,
+    this.trocoPara,
   });
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
-        hashId: json['hash_id'],
-        store: StoreModel.fromJson(json['estabelecimento']),
-        value: json['valor'],
-        deliveryCost: json['custo_entrega'],
-        observation: json['observacao'],
-        createdAt: DateTime.parse(json['created_at']),
-        statusList: json['pedido_status'] == null
-            ? []
-            : List<OrderStatusModel>.from(
-                json['pedido_status'].map(
-                  (status) => OrderStatusModel.fromJson(status),
-                ),
+      hashId: json['hash_id'],
+      store: StoreModel.fromJson(json['estabelecimento']),
+      value: json['valor'],
+      deliveryCost: json['custo_entrega'],
+      observation: json['observacao'],
+      createdAt: DateTime.parse(json['created_at']),
+      statusList: json['pedido_status'] == null
+          ? []
+          : List<OrderStatusModel>.from(
+              json['pedido_status'].map(
+                (status) => OrderStatusModel.fromJson(status),
               ),
-        productList: json['produtos'] == null
-            ? []
-            : List<OrderProductModel>.from(
-                json['produtos'].map(
-                  (product) => OrderProductModel.fromJson(product),
-                ),
+            ),
+      productList: json['produtos'] == null
+          ? []
+          : List<OrderProductModel>.from(
+              json['produtos'].map(
+                (product) => OrderProductModel.fromJson(product),
               ),
-        address: json['endereco'] == null
-            ? null
-            : AddressModel.fromJson(
-                json['endereco'],
-              ),
-        paymentMethod: json['meio_pagamento'] == null
-            ? null
-            : PaymentMethodModel.fromJson(
-                json['meio_pagamento'],
-              ),
-      );
+            ),
+      address: json['endereco'] == null
+          ? null
+          : AddressModel.fromJson(
+              json['endereco'],
+            ),
+      paymentMethod: json['meio_pagamento'] == null
+          ? null
+          : PaymentMethodModel.fromJson(
+              json['meio_pagamento'],
+            ),
+      trocoPara: json['troco_para'] ?? 0);
 }

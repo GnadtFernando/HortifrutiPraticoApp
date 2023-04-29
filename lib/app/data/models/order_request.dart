@@ -9,12 +9,14 @@ class OrderRequestModel {
   List<CartProductModel> cartProducts;
   AddressModel address;
   String? observation;
+  String? trocoPara;
 
   OrderRequestModel({
     required this.store,
     required this.paymentMethod,
     required this.cartProducts,
     required this.address,
+    this.trocoPara,
     this.observation,
   });
 
@@ -26,5 +28,6 @@ class OrderRequestModel {
             cartProducts.map((cartProduct) => cartProduct.toJson()).toList(),
         if (observation != null && observation!.trim().isNotEmpty)
           'observacao': observation,
+        if (trocoPara != null && trocoPara != '') 'troco_para': trocoPara,
       };
 }

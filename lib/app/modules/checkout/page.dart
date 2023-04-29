@@ -121,6 +121,33 @@ class CheckoutPage extends GetView<CheckoutController> {
                   ],
                 ),
               ),
+              controller.paymentMethod.value?.id == 1
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Troco para: ',
+                              style: Get.textTheme.titleMedium,
+                            ),
+                          ),
+                          controller.trocoController.text == ''
+                              ? Text(
+                                  'R\$ 0,00',
+                                  style: Get.textTheme.titleMedium,
+                                )
+                              : Text(
+                                  NumberFormat.simpleCurrency().format(
+                                      double.parse(
+                                          controller.trocoController.text)),
+                                  style: Get.textTheme.titleMedium,
+                                ),
+                        ],
+                      ),
+                    )
+                  : Container(),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

@@ -43,9 +43,12 @@ class CheckoutController extends GetxController {
   final addressSelected = Rxn<AddressModel>();
   bool get deliveryToMyAddress => getShippingByCity != null;
   bool get canSendOrder => isLogged && deliveryToMyAddress;
+  final trocoController = TextEditingController(text: '');
+  final _fieldKey = GlobalKey<FormFieldState>();
 
   @override
   void onInit() {
+    trocoController.text = '';
     fetchAddresses();
     ever(_authService.user, (_) => fetchAddresses());
     super.onInit();
@@ -53,6 +56,62 @@ class CheckoutController extends GetxController {
 
   void changePaymentMethod(PaymentMethodModel? newPaymentMethod) {
     paymentMethod.value = newPaymentMethod;
+    trocoPara(newPaymentMethod);
+  }
+
+  void trocoPara(PaymentMethodModel? newPaymentMethod) {
+    if (newPaymentMethod != null && newPaymentMethod.id == 1) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Troco para: '),
+          content: TextFormField(
+            key: _fieldKey,
+            keyboardType: TextInputType.number,
+            controller: trocoController,
+            validator: (value) {
+              final text = trocoController.value.text;
+              if (text.isEmpty) {
+                return 'Informe um valor';
+              }
+              if (double.parse(text) < totalOrder) {
+                return 'Valor menor que total da compra';
+              }
+              return null;
+            },
+          ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('Voltar'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_fieldKey.currentState?.validate() ?? false) {
+                        loading(true);
+                        // trocoController.text = trocoTexto.value;
+                        Get.back();
+                        loading(false);
+                      }
+                    },
+                    child: const Text('Confirmar'),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    } else {
+      trocoController.text = '';
+    }
   }
 
   void goToLogin() {
@@ -122,6 +181,7 @@ class CheckoutController extends GetxController {
       cartProducts: _cartSerice.products,
       address: addressSelected.value!,
       observation: _cartSerice.observacao.value,
+      trocoPara: trocoController.value.text,
     );
 
     _repository.postOrder(orderRequest).then((value) {
