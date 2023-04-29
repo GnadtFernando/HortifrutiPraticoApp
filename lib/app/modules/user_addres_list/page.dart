@@ -10,60 +10,90 @@ class UserAddressListPage extends GetView<UserAddressListController> {
     return Scaffold(
       appBar: AppBar(title: const Text('Meus Endereços')),
       body: controller.obx(
-        (state) => SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 16,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: controller.goToNewAddress,
-                        icon: const Icon(Icons.add_location),
-                        label: const Text('Novo endereço '),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              for (var address in state!)
-                ListTile(
-                  title: Text(
-                    '${address.street}, n* ${address.number}',
+        (state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
                   ),
-                  subtitle: Text(
-                    '${address.neighborhood}, ${address.city!.name}',
-                  ),
-                  trailing: PopupMenuButton(
-                    itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        value: 'edit',
-                        child: Text('Editar'),
-                      ),
-                      const PopupMenuItem(
-                        value: 'delete',
-                        child: Text('Excluir'),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: controller.goToNewAddress,
+                          icon: const Icon(Icons.add_location),
+                          label: const Text('Novo endereço '),
+                        ),
                       ),
                     ],
-                    onSelected: (value) {
-                      switch (value) {
-                        case 'delete':
-                          controller.deleteAddress(address);
-                          break;
-                        case 'edit':
-                          controller.goToEditAddress(address);
-                          break;
-                        default:
-                      }
-                    },
                   ),
                 ),
-            ],
-          ),
+                for (var address in state!)
+                  ListTile(
+                    title: Text(
+                      '${address.street}, n* ${address.number}',
+                    ),
+                    subtitle: Text(
+                      '${address.neighborhood}, ${address.city!.name}',
+                    ),
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 'edit',
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Text('Excluir'),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        switch (value) {
+                          case 'delete':
+                            controller.deleteAddress(address);
+                            break;
+                          case 'edit':
+                            controller.goToEditAddress(address);
+                            break;
+                          default:
+                        }
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
+        onEmpty: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 16,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: controller.goToNewAddress,
+                      icon: const Icon(Icons.add_location),
+                      label: const Text('Novo endereço'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Você não possui nenhum endereço cadastrado',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );

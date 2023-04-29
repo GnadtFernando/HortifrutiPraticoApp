@@ -19,6 +19,7 @@ class UserAddressListController extends GetxController
     return _repository.getUserAddresses().then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
+      change(null, status: RxStatus.empty());
       change(null, status: RxStatus.error(error.toString()));
     });
   }

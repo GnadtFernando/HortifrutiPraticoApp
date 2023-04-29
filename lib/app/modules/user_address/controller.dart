@@ -5,7 +5,6 @@ import 'package:app_hortifruti_pratico/app/modules/user_address/repository.dart'
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class UserAddressController extends GetxController
     with StateMixin<List<CityModel>> {
