@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class CartService extends GetxService {
   List<CartProductModel> products = RxList<CartProductModel>.empty();
+  bool get isEmpty => products.isEmpty;
 
   final store = Rxn<StoreModel>();
   final observacao = ''.obs;

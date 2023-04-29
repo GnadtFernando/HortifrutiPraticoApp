@@ -1,3 +1,4 @@
+import 'package:app_hortifruti_pratico/app/data/services/storage/service.dart';
 import 'package:app_hortifruti_pratico/app/modules/cart/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/cart/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/checkout/binding.dart';
@@ -19,6 +20,7 @@ import 'package:app_hortifruti_pratico/app/modules/user_addres_list/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/user_address/page.dart';
 import 'package:app_hortifruti_pratico/app/routes/routes.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class AppPages {
@@ -27,6 +29,9 @@ abstract class AppPages {
       name: Routes.dashboard,
       page: () => const DashboardPage(),
       binding: DashboardBinding(),
+      middlewares: [
+        RedirectMiddleware(),
+      ],
     ),
     GetPage(
       name: Routes.store,
@@ -75,4 +80,15 @@ abstract class AppPages {
       fullscreenDialog: true,
     ),
   ];
+}
+
+class RedirectMiddleware extends GetMiddleware {
+  @override
+  RouteSettings? redirect(String? route) {
+    if (Get.find<StorageService>().cityId == null) {
+      return const RouteSettings(name: Routes.selectCity);
+    }
+
+    return null;
+  }
 }

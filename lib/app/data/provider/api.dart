@@ -87,8 +87,9 @@ class Api extends GetConnect {
     _errorHandler(await delete('enderecos/$id'));
   }
 
-  Future<List<StoreModel>> getStores() async {
-    final response = _errorHandler(await get('cidades/1/estabelecimentos'));
+  Future<List<StoreModel>> getStores(int cityId) async {
+    final response =
+        _errorHandler(await get('cidades/$cityId/estabelecimentos'));
     final List<StoreModel> data = [];
 
     for (var store in response.body) {
