@@ -29,13 +29,10 @@ class LoginController extends GetxController {
         Get.offAllNamed(Routes.dashboard, arguments: 1);
       }
     }, onError: (error) {
-      Get.dialog(
-        AlertDialog(
+      Get.dialog(AlertDialog(
           title: Text(
-            error.toString(),
-          ),
-        ),
-      );
+        error.toString(),
+      )));
     });
   }
 }

@@ -31,35 +31,36 @@ class CheckoutPage extends GetView<CheckoutController> {
               if (controller.isLogged) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
                     children: [
                       if (controller.addresses.isNotEmpty) ...[
-                        Expanded(child: _buildAddress()),
-                        TextButton(
-                          onPressed: controller.showAddressList,
-                          child: const Text('Alterar'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(child: _buildAddress()),
+                            TextButton(
+                              onPressed: controller.showAddressList,
+                              child: const Text('Alterar'),
+                            ),
+                          ],
                         ),
+                        if (!controller.deliveryToMyAddress)
+                          Text(
+                            'O endereço selecioinado não é atendido',
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.bodyLarge!
+                                .copyWith(color: Colors.red),
+                          )
                       ] else
-                        OutlinedButton(
-                          onPressed: controller.goToNewAddress,
-                          child: const Text('Cadastrar um endereço'),
+                        Center(
+                          child: OutlinedButton(
+                            onPressed: controller.goToNewAddress,
+                            child: const Text('Cadastrar um endereço'),
+                          ),
                         )
                     ],
                   ),
                 ),
-                if (!controller.deliveryToMyAddress)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        'O endereço selecioinado não é atendido',
-                        textAlign: TextAlign.center,
-                        style: Get.textTheme.bodyLarge!
-                            .copyWith(color: Colors.red),
-                      ),
-                    ),
-                  )
               ] else
                 Center(
                   child: OutlinedButton(
