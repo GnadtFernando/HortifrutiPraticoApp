@@ -24,7 +24,7 @@ class StorageService extends GetxService {
   }
 
   Future<void> saveCityId(int cityId) {
-    return box.write(StorageKey.cityId.toString(), token);
+    return box.write(StorageKey.cityId.toString(), cityId);
   }
 
   Future<void> removeToken() {
