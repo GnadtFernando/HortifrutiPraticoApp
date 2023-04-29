@@ -53,23 +53,22 @@ class UserProfileController extends GetxController with StateMixin<UserModel> {
       password: passwordController.text,
     );
 
-    _repository.putUser(userProfileRequest).then(
-      (value) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-          const SnackBar(
-            content: Text('Seu perfil foi atualizado com sucesso!'),
-          ),
-        );
+    _repository.putUser(userProfileRequest).then((value) {
+      ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
+        const SnackBar(
+          content: Text('Seu perfil foi atualizado com sucesso!'),
+        ),
+      );
 
-        passwordController.text = '';
-      },
-      onError: (error) => Get.dialog(
+      passwordController.text = '';
+    }, onError: (error) {
+      Get.dialog(
         AlertDialog(
           title: Text(
             error.toString(),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -48,13 +48,15 @@ class RegisterController extends GetxController {
 
         Get.offAllNamed(Routes.dashboard);
       },
-      onError: (error) => Get.dialog(
-        AlertDialog(
-          title: Text(
-            error.toString(),
+      onError: (error) {
+        Get.dialog(
+          AlertDialog(
+            title: Text(
+              error.toString(),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

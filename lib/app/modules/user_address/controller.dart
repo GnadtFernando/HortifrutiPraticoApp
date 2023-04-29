@@ -67,23 +67,22 @@ class UserAddressController extends GetxController
   }
 
   void _updateAddress(UserAddressRequestModel userAddressRequest) {
-    _repository.putAddress(userAddressRequest).then(
-      (value) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-          const SnackBar(
-            content: Text('Seu endereço foi atualizado'),
-          ),
-        );
-        Get.back(result: true);
-      },
-      onError: (error) => Get.dialog(
+    _repository.putAddress(userAddressRequest).then((value) {
+      ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
+        const SnackBar(
+          content: Text('Seu endereço foi atualizado'),
+        ),
+      );
+      Get.back(result: true);
+    }, onError: (error) {
+      Get.dialog(
         AlertDialog(
           title: Text(
             error.toString(),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   void _addAddress(UserAddressRequestModel userAddressRequest) {
@@ -96,13 +95,15 @@ class UserAddressController extends GetxController
         );
         Get.back(result: true);
       },
-      onError: (error) => Get.dialog(
-        AlertDialog(
-          title: Text(
-            error.toString(),
+      onError: (error) {
+        Get.dialog(
+          AlertDialog(
+            title: Text(
+              error.toString(),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

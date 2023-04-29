@@ -48,13 +48,15 @@ class UserAddressListController extends GetxController
           ),
         );
       },
-      onError: (error) => Get.dialog(
-        AlertDialog(
-          title: Text(
-            error.toString(),
+      onError: (error) {
+        Get.dialog(
+          AlertDialog(
+            title: Text(
+              error.toString(),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
